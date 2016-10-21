@@ -1,0 +1,188 @@
+<meta charset="UTF-8" xmlns="http://www.w3.org/1999/html">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>ValueThisNow: an online appraisal service for antiques &amper; collectibles</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<%= render :partial => 'layouts/meta.html.erb' %>
+<%= render partial: 'layouts/js_constants.html.erb' %>
+<%= csrf_meta_tags %>
+<!--  styles -->
+<!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+<script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+<!--[if IE]>
+<link rel="stylesheet" type="text/css" href="/ie.css">
+<![endif]-->
+<!-- Le fav and touch icons -->
+<%= analytics_init if Rails.env.production? %>
+<style type="text/css" media="all">
+  .navbar {
+    min-width: 0px;
+  }
+</style>
+</head>
+<body>
+
+<div class="short-width">
+  <div class="top-border"> <img src="https://s3-us-west-2.amazonaws.com/vtn-temp/pdf_related/images/border-1.jpg"  alt="border-1"/></div>
+  <div class="middle-border">
+    <div class="des" style="padding: 17px;">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <%= render :partial => "/appraisals/photo_carousel.html.erb", locals: {pdf: true}   %>
+          <td>
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td style="text-align:center; position:relative;vertical-align:top;height:auto;"><%= image_tag 'https://s3-us-west-2.amazonaws.com/vtn-temp/pdf_related/images/short2.png', alt:'short2'%></td>
+              </tr>
+              <tr >
+                <td style="text-align:center; position:relative;top: 10px;vertical-align:top;height:auto;">
+                  <p style="font-size: 20px;color: #01326A;font-weight: 400; max-width:300px; margin:auto; text-align:center; ">
+                    Valuethisnow.com supports USPAP - the only generally accepted standard for appraisers in the U.S.
+                  </p></td>
+              </tr>
+              <tr>
+                <td style="text-align:center; position:relative;top: 10px;"><a href="https://en.wikipedia.org/wiki/Uniform_Standards_of_Professional_Appraisal_Practice" style="line-height: 1;font-weight: 700; text-decoration:underline;font-size: 20px;color:#01326A; padding-top:9px; display:block;">More about USAP</a></td>
+              </tr>
+          </table>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <% if @appraisal.status == EActivityValuePayed %>
+    <div class="row sub_box">
+          <% if @payment_completed  %>
+              <img src="https://valuethisnow.postaffiliatepro.com/scripts/sale.php?AccountId=default1&TotalCost=<%= number_with_precision(@appraisal.payment.amount, precision: 2) %>&OrderID=<%= @appraisal.id %>&ProductID=appraisal-<%= @appraisal.selected_plan %>" width="1" height="1" >
+          <% end %>
+          <div class="alert alert-info">
+            <i class="icon-ok"></i> Congratulations your item has been submitted for valuation! Click <%= link_to "here", new_appraisal_path, :class => "btn btn-mini btn-success" %> to get more items appraised!
+          </div>
+     </div>
+    <% end %>
+
+
+    <div class="boo">
+      <div class="long-sec-1">
+        <h2><%= @appraisal.title %></h2>
+        <% if @appraisal.status == EActivityValueFinalized %>
+          <p>FILE # : <%= @appraisal.id %></br>
+            Effective Date of Report : <%= @appraisal.updated_at.strftime("%d %b. %Y") %></br>
+
+        <% end %>
+        <% if @appraisal.status == EActivityValueClaimed || @appraisal.status == EActivityValueFinalized %>
+            APPRAISED BY : <%= @appraiser.name %>
+        <% end %>
+        </p>
+        <p>
+          <%
+            category = ""
+            if @appraisal.status == EActivityValueFinalized
+              category = @appraisal.classification.nil? ? "" : @appraisal.classification.category.name
+          end %>
+        <p>CATEGORY : <%= category %><br/> </p>
+        <p>TITLE : <%= @appraisal.title %><br/> </p>
+        <div class="clearfix"></div>
+      </div>
+      <div class="long-sec-2">
+        <h2 class="col-ol" style="background: #e9c973;">Description :</h2>
+        <p><%= @appraisal.name %></p>
+        <table width="100%" border="1" cellspacing="5" cellpadding="5" class="long_app">
+          <tr>
+            <th width="37%" scope="col"><p>APPROX. DATE</p>
+              <p>OF MANUFACTURE</p></th>
+            <th width="63%" scope="col"><p><%= @appraisal.appraisal_info.year_of_manufacture %></p></th>
+          </tr>
+          <tr>
+            <td><p>COUNTRY OF</p>
+              <p>ORIGIN</p></td>
+            <td><p><%= @appraisal.appraisal_info.country_of_origin %></p></td>
+          </tr>
+          <tr>
+            <td><p>SIGNATURES,</p>
+              <p>MAKER/MAKER'S,</p>
+              <p>DATES, ETC.</p></td>
+            <td><p><%= @appraisal.appraisal_info.makers_marks %></p></td>
+          </tr>
+          <tr>
+            <td><p>INSCRIPTIONS</p></td>
+            <td><p><%= @appraisal.appraisal_info.inscriptions %></p></td>
+          </tr>
+          <tr>
+            <td><p>DIMENSIONS</p></td>
+            <td><p><%= @appraisal.appraisal_info.dimensions %></p></td>
+          </tr>
+          <tr>
+            <td><p>CONDITION</p></td>
+            <td><p><%= @appraisal.appraisal_info.damage %></p></td>
+          </tr>
+          <tr>
+            <td><p>ITEM HISTORY</p></td>
+            <td><p><%= @appraisal.appraisal_info.item_history %></p></td>
+          </tr>
+        </table>
+      </div>
+      <% if @appraisal.status == EActivityValueFinalized %>
+      <div class="long-sec-3">
+        <h2 class="col-ol" style="background: #e9c973;">ADDITIONAL EXTRAORDINARY ASSUMPTIONS</h2>
+        <p><%= @appraisal.appraisal_info.additional_ea %></p>
+      </div>
+      <div class="long-sec-3">
+        <h2 class="col-ol" style="background: #e9c973;">COMMENTS</h2>
+        <p><%= @appraisal.appraisal_info.appraiser_comments %></p>
+      </div>
+      <div class="milt">
+        <p> Replacement value : <font color="#bb1f20"><%= print_replacement_cost(@appraisal) %></font> <br>
+          (Comparable) </p>
+        <p>Fair Market Value : <font color="#bb1f20"><%= print_fair_market_value(@appraisal) %></font></p>
+      </div>
+      <% end %>
+      <% if @appraisal.status == EActivityValueFinalized %>
+
+              <% if @appraisal.status == EActivityValueFinalized %>
+                  <% selected_plan = @appraisal.selected_plan
+                     appraiser_type = @appraiser.appraiser_info.uspap.to_i
+
+                     if (selected_plan == EAAppraisalTypeShortRestricted || selected_plan == EAAppraisalTypeLongRestricted || selected_plan == EAAppraisalTypeShortRestrictedPair || selected_plan == EAAppraisalTypeLongRestrictedPair) && appraiser_type == EAAppraiserUSPAPFamiliar
+                       format = "appraisal_body_restricteduse_USPAP_compliant_yes"
+                       option = 1
+                     elsif (selected_plan == EAAppraisalTypeShortForSelling || selected_plan == EAAppraisalTypeLongForSelling || selected_plan == EAAppraisalTypeShortForSellingPair || selected_plan == EAAppraisalTypeLongForSellingPair) && appraiser_type == EAAppraiserUSPAPFamiliar
+                       format = "appraisal_body_summary_forselling_USPAP_compliant_yes"
+                       option =2
+                     elsif (selected_plan == EAAppraisalTypeShortRestricted || selected_plan == EAAppraisalTypeLongRestricted || selected_plan == EAAppraisalTypeShortRestrictedPair || selected_plan == EAAppraisalTypeLongRestrictedPair) && appraiser_type != EAAppraiserUSPAPFamiliar
+                       format = "appraisal_body_restricteduse_USPAP_compliant_no"
+                       option =3
+                     elsif (selected_plan == EAAppraisalTypeShortForSelling || selected_plan == EAAppraisalTypeLongForSelling || selected_plan == EAAppraisalTypeShortForSellingPair || selected_plan == EAAppraisalTypeLongForSellingPair) && appraiser_type != EAAppraiserUSPAPFamiliar
+                       format = "appraisal_body_summary_forselling_USPAP_compliant_no"
+                       option =4
+                     else
+                       raise "Invalid selected_plan and appraiser_type combination"
+                     end
+                  %>
+                  <div id="supplemental_information" >
+                    <%= render :partial => "appraisals/formats/"+format, :locals => {:appraisal => @appraisal} %>
+                    <% if @appraisal.status == EActivityValueFinalized %>
+                        <div id="appraiser-info">
+                          <% if (@appraiser.signature?) %>
+                              <%= image_tag "#{@appraiser.signature.standard.url}?id=#{rand(1000)}", :height => "100", :width => "250"%>
+                          <% elsif !(@appraiser.appraiser_extra.signature_json.nil? || @appraiser.appraiser_extra.signature_json.empty?) %>
+                              <canvas id="appraiser-signature" height="100" width="250"></canvas>
+                          <% end %>
+                          <h4><%= @appraiser.name %></h4>
+                        </div>
+                    <% end %>
+
+              <% end %>
+
+          </div>
+      <% end %>
+  </div>
+</div>
+  <div class="bottom-border"><img src="https://s3-us-west-2.amazonaws.com/vtn-temp/pdf_related/images/border-bottom.jpg"  alt="border-1"/> </div>
+</div>
+</body>
+</html>

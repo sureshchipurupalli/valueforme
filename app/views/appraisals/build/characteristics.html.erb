@@ -1,0 +1,141 @@
+<div class="container wal">
+  <div class="welcome">
+    <div class="hel">
+      <h2 class="left-1">Upload Photos </h2>
+      <h2 class="right-1">2 of 4</h2>
+      <div class="clear"></div>
+    </div>
+    <div class="row">
+      <div class="col-md-9">
+        <div class="my-tab">
+          <div class="my-tab-list-bor"> </div>
+          <div class="my-tab-list">
+            <ul>
+              <li><a href="inform.html">
+                <div class="con-list">
+                  <div class="green-no color-gre"> 1 </div>
+                </div>
+              </a>Inform</li>
+              <li><a href="upload.html">
+                <div class="con-list">
+                  <div class="green-no color-gre"> 2 </div>
+                </div>
+              </a>Upload</li>
+              <li><a href="select.html">
+                <div class="con-list">
+                  <div class="green-no color-red"> 3 </div>
+                </div>
+              </a>Select</li>
+              <li><a href="check.html">
+                <div class="con-list">
+                  <div class="green-no color-red"> 4 </div>
+                </div>
+              </a>Check Out</li>
+            </ul>
+          </div>
+        </div>
+        <div class="wel-form">
+          <%= form_for(@appraisal,  :url => wizard_path, :method => :put, :html => {:multipart => true}) do |f| %>
+          <div class="pad">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <div class="row">
+                    <%= f.fields_for :appraisal_info, @appraisal.appraisal_info do |ff| %>
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-md-2">
+                            <label class="control-label" for="signature">Signatures,
+                              Maker/Maker's, Dates, Etc.</label>
+                          </div>
+                          <div class="col-md-10">
+                            <%= ff.text_field :makers_marks, :class => "form-control"%>
+                            <p>(List any signatures, maker's marks or dates. if none,enter 'none'.) </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-md-2">
+                            <label class="control-label">Inscriptions, etc.</label>
+                          </div>
+                          <div class="col-md-10">
+                            <%= ff.text_field :inscriptions, :class => "form-control"%>
+                            <p>(List any inscriptions, monograms, dedications or other such markings. If none, enter ‘none’.)
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-2">
+                      <label class="control-label ces" for="usr">* Dimensions</label>
+                    </div>
+                    <div class="col-md-10">
+                      <%= ff.text_field :dimensions, :class => "form-control"%>
+                      <p> (Enter the height, width, depth, diameter as appropriate.) </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-md-2">
+                      <label class="control-label" for="message">* Materials</label>
+                    </div>
+                    <div class="col-md-10">
+                      <%= ff.text_area :materials, :class => "form-control", :rows => "7"%>
+                      <p> What is it made out of? </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-12">
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-md-2">
+                      <label class="control-label ces" for="message">* Condition</label>
+                    </div>
+                    <div class="col-md-10">
+                      <%= ff.text_area :damage, :class => "form-control", :rows => "7"%>
+                      <p> (List any damages, old repairs, soiling, staining or other defects. If the item is mechanical or electrical, is it in good working condition?) </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <% end %>
+                    <%= render  :partial => "photos/new_multiple_image_upload_form", locals: {photos: @photos} %>
+
+                    <div class="bun2">
+                      <%= link_to "Back", previous_wizard_path, :class => "btn next-1 bge left-2" %>
+                      <%= f.submit "Next", :class => "btn next-1 gre right-2", :id => "btn_submit_avatar"%>
+                      <div class="clear"></div>
+                    </div>
+          <% end %>
+            </div>
+        </div>
+      </div>
+      </div>
+      <div class="col-md-3">
+        <div class="inform">
+          <div class="paypal">
+            <%= image_tag 'paypal.png', alt: "paypal" %>
+          </div>
+          <h6 class="trans"><font color="#e76311" >If you have to go, let's save your work for Your return !</font> </h6>
+          <div class="har">
+            <button type="button" class="btn next-1 gre">save</button>
+          </div>
+          <div class="expert">
+            <p>An Expert Appraisal
+              is only moments
+              away. don't stop now!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

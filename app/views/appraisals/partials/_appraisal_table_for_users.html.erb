@@ -1,0 +1,63 @@
+<table width="100%" class = "table table-striped" >
+  <thead>
+  <tr>
+    <th width="61" scope="col" >Item</th>
+    <th width="269" scope="col">Item ID</th>
+    <th width="97" scope="col">Status</th>
+    <th width="102" scope="col">Date <br>
+      Appraised</th>
+    <th width="122" scope="col">Estimated Fair<br>
+      Market Value</th>
+    <th width="108" scope="col">Estimated<br>
+      Replacement Value</th>
+    <th width="109" scope="col">Appraisal Type</th>
+    <th colspan="6" scope="col">Edit/Delete <br> Take Action</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% appraisals.each do |appraisal| %>
+
+  <tr>
+    <td><%= linked_thumbnail(appraisal) %></td>
+    <td><%= linked_title(appraisal) %></td>
+    <td><%= getStringForActivityValue(appraisal.status) %></td>
+    <td><%= completed_on(appraisal) %></td>
+    <td><%= print_fair_market_value(appraisal) %></td>
+    <td><%= print_replacement_cost(appraisal) %></td>
+    <td><%= getStringForAppraisalType(appraisal.selected_plan) %></td>
+      <div class="visible-xs visible-sm">
+        <% if appraisal.status == EActivityValueCreated %>
+            <td width="79">
+              <%= link_to('Edit', appraisal_build_index_path(appraisal), :class => "btn gre4", :style => "margin:2px;") if appraisal.status == EActivityValueCreated %>
+            </td>
+        <% elsif  appraisal.status == EActivityValuePayed %>
+            <td width="79">
+              <%= link_to('Edit', edit_appraisal_path(appraisal), :class => "btn gre4", :style => "margin:2px;") if appraisal.status == EActivityValuePayed %>
+            </td>
+            <td width="100" colspan="3"></td>
+        <% end %>
+        <% if appraisal.status == EActivityValueFinalized %>
+            <td width="77"><%= link_to('Sell It', completed_appraisal_path(appraisal.id), :class => "btn gre5", :style => "margin:2px;")%></td>
+            <td width="77"><%= link_to('Pawn It', completed_appraisal_path(appraisal.id), :class => "btn ora4", :style => "margin:2px;") %></td>
+            <td width="93"><%= link_to('Insure It', completed_appraisal_path(appraisal.id), :class => "btn ins", :style => "margin:2px;") %></td>
+            <td width="77"><%= link_to('Repair It', completed_appraisal_path(appraisal.id), :class => "btn fix", :style => "margin:2px;") %></td>
+        <% end %>
+      </div>
+    <td width="86">
+      <div class="hidden-xs hidden-sm">
+        <%= button_to('Delete', appraisal, :confirm => 'Are you sure?', :method => :delete, :class => "btn ora4") if appraisal.status == EActivityValueCreated %>
+        <% if appraisal.status == EActivityValueFinalized %>
+            <%= render :partial => "appraisals/partials/push_to_social", :locals => {:appraisal => appraisal} %>
+        <% end %>
+      </div>
+      <div class="visible-xs visible-sm">
+        <%= button_to appraisal, :confirm => 'Are you sure?', :method => :delete, :class => "btn btn-success btn-xs ora4" do %><span class="glyphicon glyphicon-trash"></span><% end if appraisal.status == EActivityValueCreated %>
+        <% if appraisal.status == EActivityValueFinalized %>
+            <%= render :partial => "appraisals/partials/push_to_social", :locals => {:appraisal => appraisal} %>
+        <% end %>
+      </div>
+    </td>
+  </tr>
+  <% end %>
+  </tbody>
+</table>

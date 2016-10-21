@@ -1,0 +1,44 @@
+<%= render :partial => "layouts/doc_has_changed" %>
+
+<div class="container wal">
+  <div class="account">
+    <h2 style="text-align:left">Account</h2>
+    <%= render :partial => "appraiser_tabs" %>
+    <% unless current_user.is_rejected? %>
+        <% if current_user.is_appraiser? %>
+            <div class="alert alert-info">
+          <span class="glyphicon glyphicon-warning-sign"></i>  <strong>NOTICE:</strong> This information is primarily for the private use of ValueThisNow.com and will not be made public. Only the appraiser’s name, image and website will be made public.
+            </span></div>
+        <% end %>
+        <div class="wel-form account-form">
+          <%= form_for(@user,  :url => wizard_path, :method => :put, :html => {:multipart => true}) do |f| %>
+          <div class="pad">
+            <div class="row">
+              <div class="col-md-3 sw4">
+                <%= image_tag @user.avatar_url(:small), :size => "180x180", :class => "img-responsive"%>
+                <span class="btn next-1 gre abc">
+                  <%= image_tag("camera.png") %>
+                  <%= link_to new_avatar_path do %>
+                      <span class="jj"> Change your Image </span>
+                  <% end %>
+                </span>
+                <input type="hidden" name="has_avatar" id="has_avatar" value=<%= current_user.avatar? %>>
+              </div>
+              <div class="col-md-9">
+                <div class="up-img">
+                  <p>Uploading an image helps to create a more personal relationship between you and your
+                    appraisers but is not a requirement.</p>
+                </div>
+              </div>
+              </div>
+            </div>
+          <div class="bun2">
+            <%= link_to "Previous Step", previous_wizard_path, :class => "btn next-1 bge left-2" %>
+            <%= f.submit "Save and Continue", :class => "btn next-1 gre right-2", :id => "btn_submit_avatar"%>
+            <div class="clear"></div>
+          </div>
+         <% end %>
+        </div>
+    <% end %>
+  </div>
+</div>

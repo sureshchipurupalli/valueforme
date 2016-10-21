@@ -1,0 +1,26 @@
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: valuemenow_db
+  username: valuemenow
+  password: valuemenowpw
+  host: localhost
+  pool: 5
+
+#development:
+  #adapter: postgresql
+  #encoding: unicode
+  #database: dtm0sposn56bg
+  #username: yvgbzoeiahaykv
+  #password: 42tF28l6l2xomYN6ccocCGEm14
+  #host: ec2-54-243-37-255.compute-1.amazonaws.com
+  #pool: 5
+  #port: 5432
+
+test:
+  adapter: postgresql
+  encoding: unicode
+  database: valuemenow_db_test
+  username: valuemenow
+  password: valuemenowpw
+  host: localhost

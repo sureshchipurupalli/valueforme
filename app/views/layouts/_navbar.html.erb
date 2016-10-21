@@ -1,0 +1,66 @@
+<header>
+  <script type="text/javascript">
+
+    /***********************************************
+     * Drop Down Date select script- by JavaScriptKit.com
+     * This notice MUST stay intact for use
+     * Visit JavaScript Kit at http://www.javascriptkit.com/ for this script and more
+     ***********************************************/
+
+    var monthtext=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sept','Oct','Nov','Dec'];
+
+    function populatedropdown(monthfield, yearfield){
+      var today=new Date()
+      var monthfield=document.getElementById(monthfield)
+      var yearfield=document.getElementById(yearfield)
+      for (var m=0; m<12; m++)
+        monthfield.options[m]=new Option(monthtext[m], monthtext[m])
+      monthfield.options[today.getMonth()]=new Option(monthtext[today.getMonth()], monthtext[today.getMonth()], true, true) //select today's month
+      var thisyear=today.getFullYear()
+      for (var y=0; y<20; y++){
+        yearfield.options[y]=new Option(thisyear, thisyear)
+        thisyear+=1
+      }
+      yearfield.options[0]=new Option(today.getFullYear(), today.getFullYear(), true, true) //select today's year
+    }
+
+  </script>
+<nav class="navbar navbar-inverse-index" role="banner">
+  <div class="container wal">
+    <div class="navbar-header twe">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span>
+        <span class="icon-bar"></span> <span class="icon-bar"></span>
+      </button>
+        <%= link_to image_tag("main_logo.png", :alt=> "finding antique and collectable treasure", :class => "navbar-brand logo"), root_path %>
+    </div>
+    <div class="collapse navbar-collapse navbar-right welnav" id="myNavbar">
+      <ul class="nav navbar-nav welnav">
+        <li><%= link_to("Home", root_path) %></li>
+        <% if current_user %>
+            <li><%= link_to("My Account", appraiser_steps_path) %></li>
+          <% if current_user.is_customer? %>
+              <li><%= link_to "Appraise my Item", appraisal_build_index_path(appraisal_id: 'building'), method: :post %></li>
+              <li><%= link_to("My Appraisals", appraisals_path) %></li>
+          <% elsif current_user.is_appraiser? && current_user.is_confirmed? %>
+              <li><%= link_to("My Dashboard", dashboard_detail_path) %></li>
+          <% end %>
+            <li class="active"><%= current_user.get_user_name %></li>
+            <li class="wel-login"><%= link_to("Signout", destroy_user_session_path, method: :delete) %></li>
+        <% else %>
+          <li><%= link_to("Blog", 'http://blog.valuethisnow.com') %></li>
+          <li><%= link_to('Testimonials', controller: '/home', action: :testimonials) %></li>
+          <li><a href="<%= url_for how_path(:role => "appraiser")%>">How It Works</a></li>
+
+          <li><%= link_to "Register as Customer", new_customer_registration_path %></li>
+          <li><%= link_to "Register as Appraiser", new_appraiser_registration_path %></li>
+
+          <li class="login"><%= link_to("Login", new_user_session_path) %></li>
+        <% end %>
+        </ul>
+    </div>
+  </div>
+</nav>
+</header>
+
+

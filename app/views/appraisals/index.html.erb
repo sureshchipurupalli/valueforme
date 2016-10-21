@@ -1,0 +1,53 @@
+<div class="container wal">
+  <p class="app-top">
+    <%= @user.name %>, let's get your items valued!
+  </p>
+  <div class="app-top-2">
+    <div class="row">
+      <div class="col-md-5">
+        <% unless @appraisals.empty? %>
+          <h2 style="text-align:left;">WHAT YOU ENTERED SO FAR</h2>
+        <% end %>
+      </div>
+      <% if @appraisals.empty?
+           btnText = "Get an item evaluated"
+         else
+           btnText = "Add an additional item for appraisal"
+         end %>
+      <div class="col-md-7 text-right">
+        <%= link_to btnText, appraisal_build_index_path(appraisal_id: 'building'), method: :post,  :class => "btn ghd" %>
+      </div>
+    </div>
+  </div>
+  <div class="app-top-3">
+    <div class="table-responsive">
+      <% unless @appraisals.empty? %>
+        <%= render :partial => 'appraisals/partials/appraisal_table_for_users', locals: {appraisals: @appraisals} %>
+        <div style="text-align: center;">
+          <%= paginate @appraisals %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" src="https://ws.sharethis.com/button/buttons.js"></script>
+<script type="text/javascript">stLight.options({publisher: "e499a8d7-42db-4445-9636-9141483d9fbe"});</script>
+<% #TODO Move this into CoffeeScript file
+  %>
+<script type="text/javascript">
+  var selectedAppraisal;
+function myCallbackFunction (event,service)
+{
+  $.ajax({
+url: "<%= url_for share_appraisal_path %>.json",
+type: 'post',
+dataType: 'script',
+data: { 'appraisal_id': selectedAppraisal },
+success: function() {
+}
+});
+}
+stLight.subscribe("click",myCallbackFunction); //register the callback function with sharethis
+</script>
+

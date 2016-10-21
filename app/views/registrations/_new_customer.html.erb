@@ -1,0 +1,67 @@
+<div class="container">
+  <div class="login">
+    <h2 style="text-align:left">Sign-up</h2>
+    <div class="my-login">
+      <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => {:class => "login", :autocomplete => "off", :style => "margin-left: 30px"}) do |f| %>
+          <div class="row">
+            <div class="col-md-5">
+              <div class="sidn">
+                <div class="form-group">
+                  <label class="control-label" >Name<font color="#ff5a00">*</font></label>
+                  <%= f.text_field :name, :class => "form-control", :autocomplete => "off", required: true %>
+                  <p class='error' style="color:#a94442;"><%= show_errors(resource, :name) %></p>
+                </div>
+                <div class="form-group">
+                  <label class="control-label">Email<font color="#ff5a00">*</font></label>
+                  <%= f.email_field :email, :class => "form-control", :autocomplete => "off", required: true%>
+                  <p class='error' style="color:#a94442;"><%= show_errors(resource, :email) %></p>
+                </div>
+                <div class="form-group">
+                  <label class="control-label">Password<font color="#ff5a00">*</font></label>
+                  <%= f.password_field :password, :class => "form-control", :autocomplete => "off", required: true %>
+                  <p class='error' style="color:#a94442;"><%= show_errors(resource, :password) %></p>
+                </div>
+                <div class="form-group">
+                  <label class="control-label" >Confirm Password<font color="#ff5a00">*</font></label>
+                  <%= f.password_field :password_confirmation, :class => "form-control", :autocomplete => "off", required: true %>
+                  <p class='error' style="color:#a94442;"><%= show_errors(resource, :password_confirmation) %></p>
+                </div>
+                <div class="ghpay">
+                  <label for="checkbox"> I have read and agree to the Terms of Service</label>
+                  <%= f.check_box :agree_to_tos, :class => "checkbox", required: true %>
+                  <div class="clearfix"></div>
+                </div>
+                <div class="text-right">
+                  <%= f.submit "Login", :class => "btn log-gre" %>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-7">
+              <div class="social">
+                <%= link_to customer_omniauth_authorize_path(:facebook), class: "my-so my-face" do %>
+                    <div class="fb-pad">
+                      <span><i class="fa fa-facebook"> </i></span>
+                    </div>Sign In with Facebook
+                <% end %>
+              </div>
+              <div class="social">
+                <%= link_to customer_omniauth_authorize_path(:twitter), class: "my-so my-twi" do %>
+                    <div class="twi-pad">
+                      <span><i class="fa ftw fa-twitter"> </i></span></div>Sign In with Twitter
+                <% end %>
+              </div>
+              <div class="social">
+                <%= link_to customer_omniauth_authorize_path(:linkedin), class: "my-so my-link" do %>
+                    <div class="link-pad">
+                      <span><i class="fa fli fa-linkedin"> </i></span></div>Sign In with Linkedin
+                <% end %>
+              </div>
+            </div>
+      <% end %>
+      </div>
+      <div class="login-nav">
+        <%= render "devise/shared/links" %>
+      </div>
+    </div>
+  </div>
+</div>

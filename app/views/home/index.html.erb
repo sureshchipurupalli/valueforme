@@ -1,0 +1,54 @@
+<div class="random-slider">
+  <div id="owl-demo1" class="owl-carousel owl-theme">
+    <%= render :partial => "home/banners"%>
+  </div>
+</div>
+  <section class="section_1">
+    <div class="more_size">
+      <%= render :partial => "home/recent_appraisals"%>
+      <%= render :partial => "home/what_we_do"%>
+      <%= render :partial => "home/categories"%>
+      <%= render :partial => "home/social_sign_in"%>
+    </div>
+</section>
+<section class="section_4">
+  <div class="more_size">
+    <%= render :partial => "home/call_to_action"%>
+  </div>
+</section>
+<section class="section_3">
+  <div class="more_size">
+    <%= render :partial => "home/vtn_advantage"%>
+  </div>
+</section>
+  <script>
+    $(document).ready(function() {
+
+      //Sort random function
+      function random(owlSelector){
+        owlSelector.children().sort(function(){
+          return Math.round(Math.random()) - 0.5;
+        }).each(function(){
+          $(this).appendTo(owlSelector);
+        });
+      }
+
+      $("#owl-demo1").owlCarousel({
+        autoPlay:60000,
+        singleItem:true,
+        navigation: true,
+        navigationText: [
+          "<i class='icon-chevron-left icon-white'></i>",
+          "<i class='icon-chevron-right icon-white'></i>"
+        ],
+        beforeInit : function(elem){
+          //Parameter elem pointing to $("#owl-demo")
+          random(elem);
+        }
+
+      });
+
+    });
+  </script>
+
+</div>

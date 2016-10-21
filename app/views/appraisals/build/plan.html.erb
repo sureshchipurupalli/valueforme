@@ -1,0 +1,261 @@
+<div class="container wal">
+  <%= simple_form_for(@appraisal, :url => wizard_path, :method => :put, :html => {:multipart => true, :class => "form-horizontal"}) do |f| %>
+  <div class="welcome app">
+    <h2>Appraisal Type</h2>
+    <div class="my-tab plans">
+      <div class="my-tab-list-bor"></div>
+      <div class="my-tab-list">
+        <ul>
+          <li><a href="inform.html">
+            <div class="con-list">
+              <div class="green-no color-gre"> 1</div>
+            </div>
+          </a> Inform
+          </li>
+          <li><a href="upload.html">
+            <div class="con-list">
+              <div class="green-no color-gre"> 2</div>
+            </div>
+          </a>Upload
+          </li>
+          <li><a href="select.html">
+            <div class="con-list">
+              <div class="green-no color-gre"> 3</div>
+            </div>
+          </a>Select
+          </li>
+          <li><a href="check.html">
+            <div class="con-list">
+              <div class="green-no color-red"> 4</div>
+            </div>
+          </a>Check Out
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="row">
+          <div class="col-md-12">
+            <div class="row">
+              <div class="my-wel-row">
+                <div class="col-md-7 five-three">
+                  <div class="row">
+                    <div class="col-md-4 planprod1" id="planprod1">
+                      <div class="top">
+                        <h3>Top Seller</h3>
+                      </div>
+                      <label for="checkbox11" class="jkl">
+                        <div class="auc">
+                          <div class="wel-gre">
+                            <p>Auction Estimate </p>
+                          </div>
+                          <h4>PERSONAL </br>
+                            USE ONLY</h4>
+                          <ul>
+                            <li> Auction value range</li>
+                            <li>Proper description of the subject property</li>
+                            <li>Estimated age of subject property</li>
+                            <li>Brief appraiser comments</li>
+                            <li>USPAP Compliant</li>
+                          </ul>
+                          <h6>Uses</h6>
+                          <ul>
+                            <li>Personal curiosity</li>
+                            <li>Buying or selling</li>
+                          </ul>
+                          <h5 class="dol"><%= number_to_currency(PAYMENT_PLAN[EAAppraisalTypeAuctionEstimate-1]) %></h5>
+                        </div>
+                      </label>
+                      <div class="my-select">
+                        <div>
+                          <input id="checkbox1" class="tick1" type="checkbox" name="checkbox" value="1" unchecked>
+                          <label id="check1" for="checkbox1"><span></span><span class="sele">select</span></label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4 planprod2" id="planprod2">
+                      <div class="top"></div>
+                      <label for="checkbox22" class="jkl">
+                        <div class="auc">
+                          <div class="wel-gre">
+                            <p>Short Restricted Use</p>
+                          </div>
+                          <h4>PERSONAL </br>
+                            USE ONLY</h4>
+                          <ul>
+                            <li> Basic valuation</li>
+                            <li>Basic appraiser’s comments</li>
+                            <li>Replacement Value</li>
+                            <li>Fair Market Value</li>
+                            <li>USPAP Compliant</li>
+                          </ul>
+                          <h6>Uses</h6>
+                          <ul>
+                            <li>Personal curiosity</li>
+                            <li>Buying or selling</li>
+                            <li>Equitable distribution</li>
+                            <li>Estate planning</li>
+                          </ul>
+                          <h5 class="dol"><%= number_to_currency(PAYMENT_PLAN[EAAppraisalTypeShortRestricted-1]) %></h5>
+                        </div>
+                      </label>
+                      <div class="my-select">
+                        <div>
+                          <input id="checkbox2" type="checkbox" name="checkbox" value="2" unchecked>
+                          <label id="check2" for="checkbox2"><span></span><span class="sele">select</span></label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4 planprod3" id="planprod3">
+                      <div class="top"></div>
+                      <label for="checkbox23" class="jkl">
+                        <div class="auc">
+                          <div class="wel-gre">
+                            <p>Long Restricted Use</p>
+                          </div>
+                          <h4>PERSONAL </br>
+                            USE ONLY</h4>
+                          <ul>
+                            <li> Standard valuation</li>
+                            <li>Comprehensive appraiser’s comments</li>
+                            <li>Replacement Value</li>
+                            <li>Fair Market Value</li>
+                            <li>Comprehensive description</li>
+                            <li>History often included</li>
+                            <li>USPAP Compliant</li>
+                          </ul>
+                          <h6>Uses</h6>
+                          <ul>
+                            <li>Personal curiosity</li>
+                            <li>Buying or selling</li>
+                            <li>Equitable distribution</li>
+                            <li>Equitable distribution</li>
+                            <li>Estate planning</li>
+                          </ul>
+                          <h5 class="dol"><%= number_to_currency(PAYMENT_PLAN[EAAppraisalTypeLongRestricted-1]) %></h5>
+                        </div>
+                      </label>
+                      <div class="my-select">
+                        <div>
+                          <input id="checkbox3" type="checkbox" name="checkbox" value="3" unchecked>
+                          <label id="check3" for="checkbox3"><span></span><span class="sele">select</span></label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-5 five-two">
+                  <div class="row">
+                    <div class="col-md-6 planprod4" id="planprod4">
+                      <div class="top">
+                        <h3>Top Seller</h3>
+                      </div>
+                      <label for="checkbox12" class="jkl">
+                        <div class="auc">
+                          <div class="wel-gre">
+                            <p>long full USE</p>
+                          </div>
+                          <h4> FOR USE BY </br>
+                            THIRD PARTIES </h4>
+                          <ul>
+                            <li>Premium valuation</li>
+                            <li>Comprehensive appraiser’s comments</li>
+                            <li>Replacement Value</li>
+                            <li>Fair Market Value</li>
+                            <li>Comprehensive description</li>
+                            <li>History often included</li>
+                            <li>USPAP compliant</li>
+                          </ul>
+                          <h6>Uses</h6>
+                          <ul>
+                            <li>Buying or selling</li>
+                            <li>Equitable distribution</li>
+                            <li>Estate planning</li>
+                            <li>
+                              <h6 class="marg trans"><font color="e76311">with pre-approval<br>
+                                May be Accepted for</font></h6>
+                            </li>
+                            <li>Damage claims</li>
+                            <li>Acquiring insurance</li>
+                            <li>Other legal uses</li>
+                          </ul>
+                          <h5 class="dol"><%= number_to_currency(PAYMENT_PLAN[EAAppraisalTypeLongForSelling-1]) %></h5>
+                        </div>
+                      </label>
+                      <div class="my-select">
+                        <div>
+                          <input id="checkbox4" type="checkbox" name="checkbox" value="4" unchecked>
+                          <label id="check4" for="checkbox4"><span></span><span class="sele">select</span></label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6 planprod5" id="planprod5">
+                      <div class="top"></div>
+                      <label for="checkbox9" class="jkl">
+                        <div class="auc">
+                          <div class="wel-gre">
+                            <p>Tax Appraisal</p>
+                          </div>
+                          <h4> Valuations </br>
+                            up to $5,000</h4>
+                          <ul>
+                            <li>Premium valuation</li>
+                            <li>Comprehensive appraisers comments</li>
+                            <li>Replacement Value</li>
+                            <li>Fair Market Value</li>
+                            <li>Comprehensive description</li>
+                            <li>USPAP compliant</li>
+                            <li>IRS Compliant</li>
+                            <li>Partially Completed IRS form 8283</li>
+                            <li>(Section A ONLY)</li>
+                          </ul>
+                          <h6>Uses</h6>
+                          <ul>
+                            <li>Ideal for charitable</li>
+                            <li>contributions when under $5,000 FMV</li>
+                          </ul>
+                          <ul>
+                            <li>Proof of value to the IRS</li>
+                            <li>Ideal for tax preparation</li>
+                            <li>Ideal for gifting personal property</li>
+                          </ul>
+                          <h5 class="dol"><%= number_to_currency(PAYMENT_PLAN[EAAppraisalTypeTaxAppraisal-1]) %></h5>
+                        </div>
+                      </label>
+                      <div class="my-select">
+                        <div>
+                          <input id="checkbox5" type="checkbox" name="checkbox" value="5" unchecked>
+                          <label id="check5" for="checkbox5"><span></span><span class="sele">select</span></label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+          <%= f.input :selected_plan, as: :hidden %>
+          </div>
+          <div class="select-note">
+            <p><b>Note:</b> Check the box below if your appraisal request is for a set (e.g., dresser set), service
+              (e.g., flateware or dinnerware service), or a suite (e.g., suite of bedroom furniture).</p>
+            <input type="checkbox" value="" id="appraisel">
+            <label class="checkbox" for="appraisel">
+              Appraisals for a set, service or a suite
+            </label>
+            <div class="clear"></div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <div class="row">
+                <div class="bun2">
+                  <%= link_to "Back", previous_wizard_path, :class => "btn next-1 bge left-2" %>
+                  <%= f.submit "Next", :class => "btn next-1 gre right-2", :id => "btn_submit_avatar"%>
+                  <div class="clear"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+  </div>
+      <% end %>
+</div>

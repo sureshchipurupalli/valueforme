@@ -1,0 +1,361 @@
+<div class="product">
+  <div class="container">
+    <div  class="row">
+      <div class="col-md-12 text-left">
+        <div class="pro-1">
+          <p>This is a <%= getStringForAppraisalType(@appraisal.selected_plan) %> - appraiser comments are restricted to 20 words max.</p>
+          <p>Current status: <%= getStringForActivityValue(@appraisal.status) %></p>
+          <p>File number: <%= @appraisal.id %></p>
+          <p>Category: <%= @appraisal.classification.category.name unless @appraisal.classification.nil? %></p>
+        </div>
+      </div>
+    </div>
+    <div class="app-big-1">
+      <h2 style="text-align:left;"><%= @appraisal.title %></h2>
+      <div class="row">
+        <div class="col-md-8">
+          <div class="restrick">
+            <div class="row">
+              <div class="wel-form">
+                <%= form_for(@appraisal,  :html => {:multipart => true, :class => 'form-horizontal'}) do |f| %>
+                <div class="pad">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-md-3">
+                            <label class="control-label">*Title</label>
+                          </div>
+                          <div class="col-md-9">
+                            <%= f.text_field :title, :class => "form-control" %>
+                            <p> (Enter a very brief noun name of the item.) </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-md-3">
+                            <label class="control-label">*Description</label>
+                          </div>
+                          <div class="col-md-9">
+                            <%= f.text_area :name, :class => "form-control", :rows => "5"%>
+                            <p> (Describe the item as typically done in the trade.)    </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <%= f.fields_for :appraisal_info, @appraisal.appraisal_info do |ff| %>
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-md-3">
+                            <label class="control-label">Approx. Date of  Manufacture</label>
+                          </div>
+                          <div class="col-md-9">
+                            <%= ff.text_area :year_of_manufacture, :class => "form-control", :rows => "4" %>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-md-3">
+                            <label class="control-label">Country of Origin</label>
+                          </div>
+                          <div class="col-md-9">
+                            <%= ff.text_area :year_of_manufacture, :class => "form-control", :rows => "4" %>
+                            <p>(If determinable, else ‘unknown’)</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                     <div class="col-md-12">
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-md-3">
+                            <label class="control-label">Signatures,
+                              Maker/Maker's, Dates, Etc.</label>
+                          </div>
+                          <div class="col-md-9">
+                            <div class="atur">
+                              <%= ff.text_area :makers_marks, :class => "form-control", :rows => "4" %>
+                            </div>
+                            <p>(Enter a very brief noun name of the item.) </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-md-3">
+                            <label class="control-label">Inscriptions, etc.</label>
+                          </div>
+                          <div class="col-md-9">
+                            <div class="atur">
+                              <%= ff.text_area :inscriptions, :class => "form-control", :rows => "4"  %>
+                            </div>
+                            <p>(List any inscriptions, monograms, dedications or other such markings. If none, enter ‘none’.)
+                            </p>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-md-3">
+                            <label class="control-label">Dimensions</label>
+                          </div>
+                          <div class="col-md-9">
+                            <div class="atur">
+                              <%= ff.text_area :dimensions, :class => "form-control", :rows => "4"  %>
+                            </div>
+                            <p>(Enter the height, width, depth, diameter as appropriate.)
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-md-3">
+                            <label class="control-label">Condition</label>
+                          </div>
+                          <div class="col-md-9">
+                            <%= ff.text_area :damage, :class => "form-control", :rows => "4"  %>
+                            <p>(General observations by appraiser as to condition) </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-md-3">
+                            <label class="control-label">Item History.</label>
+                          </div>
+                          <div class="col-md-9">
+                            <div class="atur">
+                              <%= ff.text_area :item_history, :class => "form-control", :rows => "4"  %>
+                            </div>
+                            <p>(Includes ‘’provenance’’, i.e. past ownership, how and when obtained by client or client’s family.)  </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-md-3">
+                            <label class="control-label">Appraiser’s</br>
+                              Additional
+                              Extraordinary
+                              Assumptions</label>
+                          </div>
+                          <div class="col-md-9">
+                            <%= ff.text_area :additional_ea, :class => "form-control", :rows => "5"  %>
+                            <p>This space is for extraordinary assumptions you  had to make in order to develop an opinion of value, e.g.: ‘teapot assumed to be sterling silver and not silverplate’. If none, state ‘none’.</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-md-3">
+                            <label class="control-label">*Appraiser’s
+                              Additional  </br>
+                              Comment</label>
+                          </div>
+                          <div class="col-md-9">
+                            <%= ff.text_area :appraiser_comments, :class => "form-control", :rows => "5"  %>
+                            <ul class="word">
+                              <li>0 Characters </li>
+                              <li>  0 Words </li>
+                            </ul>
+                            <p>(E.g., history of the item or its maker, how the item was used, historical significance, association with important personages, extraordinary assumptions being made by the appraisers, market data on which option of value was based (i.e., past
+                              comparable sales or current asking prices for similar items ), how to best care for or preserve the item, relevant club to join or periodical to subscribe to if interested in learning more about the item. web sites of interest, etc.)</p>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-md-3">
+                            <label class="control-label">*Replacement Value
+                              (comparable Mini.)</label>
+                          </div>
+                          <div class="col-md-9">
+                            <%= ff.text_field :replacement_cost_min, :class => "form-control" %>
+                            <p> (Enter a very brief noun name of the item.) </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-md-3">
+                            <label class="control-label">*Replacement Value
+                              (comparable Max.)</label>
+                          </div>
+                          <div class="col-md-9">
+                            <%= ff.text_field :replacement_cost_max, :class => "form-control" %>
+                            <p> Consider replacement value to be what the client would most likely have to pay in order to purchase a comparable item from a retail gallery or dealer. This is the
+                              highest price possible. </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-md-3">
+                            <label class="control-label">*Fair Market Value
+                              Min.</label>
+                          </div>
+                          <div class="col-md-9">
+                            <%= ff.text_field :fair_market_value_min, :class => "form-control" %>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-md-3">
+                            <label class="control-label">*Fair Market Value
+                              Max.</label>
+                          </div>
+                          <div class="col-md-9">
+                            <%= ff.text_field :fair_market_value_max, :class => "form-control" %>
+                            <p> Consider Fair Market Value to be what the client would most likely be able to sell the item for at action. Fair Market Value is always less then replacement value. </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <% end %>
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <div class="row">
+                          <div class="col-md-offset-3">
+                             <div class="checkbox">
+                                <label>
+                                  <input type="checkbox" name="suggest_rejection" id="chkSuggestRejection">
+                                </label>
+                                <p class="sal">Suggest to admin that this assignment  be rejected and the customer so notified</p>
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                    <%= f.hidden_field :status, :as => :hidden, :value => @appraisal.status %>
+                <div class="appraisel-button">
+                  <ul>
+                    <li><%= f.submit "Save and Update Appraisal", :class => "btn gre", :id => "btnUpdateAppraisalReply"%></li>
+                    <li><%= f.submit "Save and Submit Appraisal to Client", :class => "btn gre", :id => "btnSubmitAppraisalReply"%></li>
+                    <li><%= f.submit "Reject Appraisal", :class => "btn gre", :id => "btnRejectAppraisal"%></li>
+                  </ul>
+                </div>
+                <% end %>
+                <div class="row">
+                  <div class="col-md-12">
+                    <%= render :partial => "appraisals/comments", :locals => {:appraisal => @appraisal, :comments => @appraisal_comments}%>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="row">
+            <%= render :partial => "photo_carousel" %>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script type="text/javascript">
+  var payment_selected_plan = <%= @appraisal.selected_plan %>;
+  var edit_form;
+
+$(document).ready(function() {
+  $("#btnRejectAppraisal").attr("disabled", true)
+  // Disable Reject Button
+  var words_number = 0;
+
+    edit_form = $(".edit_appraisal").validate({
+      rules: {
+        "appraisal[title]": {
+          required: true
+        },
+        "appraisal[name]": {
+          required: true
+        },
+        "appraisal[appraisal_info][damage]": {
+          required: true
+        },
+        "appraisal[appraisal_info][replacement_cost_min]": {
+          required: true
+        },
+        "appraisal[appraisal_info][replacement_cost_max]": {
+          required: true
+        },
+        "appraisal[appraisal_info][fair_market_value_min]": {
+          required: true
+        },
+        "appraisal[appraisal_info][fair_market_value_max]": {
+          required: true
+        }
+      },
+      messages: {
+        "appraisal[title]": {
+          required: "This field is required."
+        },
+        "appraisal[name]": {
+          required: "This field is required."
+        },
+        "appraisal[appraisal_info][damage]": {
+          required: "This field is required."
+        },
+        "appraisal[appraisal_info][replacement_cost_min]": {
+          required: "This field is required."
+        },
+        "appraisal[appraisal_info][fair_market_value_min]": {
+          required: "This field is required."
+        },
+        "appraisal[appraisal_info][fair_market_value_max]": {
+          required: "This field is required."
+        },
+        "appraisal[appraisal_info][damage]": {
+          required: "This field is required."
+        }
+      },
+      errorPlacement: function(error, element) {
+        error.appendTo(element.parent());
+      }
+    });
+
+
+})
+
+</script>

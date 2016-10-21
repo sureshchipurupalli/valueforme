@@ -1,0 +1,152 @@
+<meta charset="UTF-8" xmlns="http://www.w3.org/1999/html">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <title>ValueThisNow: an online appraisal service for antiques &amper; collectibles</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <%= render :partial => 'layouts/meta.html.erb' %>
+  <%= render partial: 'layouts/js_constants.html.erb' %>
+  <%= csrf_meta_tags %>
+  <script type="text/javascript">
+
+    $(document).ready(function() {
+      var signatureData = JSON.parse('<%= raw @appraiser.appraiser_extra.signature_json %>');
+      $('#appraiser-signature').signaturePanel("drawClickstreamToCanvas",signatureData);
+    });
+  </script>
+  <!--  styles -->
+  <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+  <!--[if lt IE 9]>
+  <script src="https://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <!--[if IE]>
+  <link rel="stylesheet" type="text/css" href="/ie.css">
+  <![endif]-->
+  <!-- Le fav and touch icons -->
+  <%= analytics_init if Rails.env.production? %>
+  <style type="text/css" media="all">
+    .navbar {
+      min-width: 0px;
+    }
+  </style>
+</head>
+<body>
+<div class="short-width">
+  <div class="top-border"> <img src="https://s3-us-west-2.amazonaws.com/vtn-temp/pdf_related/images/border-1.jpg"  alt="border-1"/></div>
+  <div class="middle-border">
+    <div class="des" style="padding: 17px;">
+      <table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <%= render :partial => "/appraisals/photo_carousel.html.erb", locals: {pdf: true}   %>
+          <td>
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td style="text-align:center; position:relative;vertical-align:top;height:auto;"><%= image_tag 'https://s3-us-west-2.amazonaws.com/vtn-temp/pdf_related/images/short2.png', alt:'short2', size: '160'%></td>
+              </tr>
+              <tr >
+                <td style="text-align:center; position:relative;top: 10px;">
+                  <p style="font-size: 20px;color: #01326A;font-weight: 400; max-width:300px; margin:auto; text-align:center; ">
+                    Valuethisnow.com supports USPAP - the only generally accepted standard for appraisers in the U.S.
+                  </p></td>
+              </tr>
+              <tr>
+                <td style="text-align:center; position:relative;top: 10px;"><a href="https://en.wikipedia.org/wiki/Uniform_Standards_of_Professional_Appraisal_Practice" style="line-height: 1;font-weight: 700; text-decoration:underline;font-size: 20px;color:#01326A; padding-top:9px; display:block;">More about USAP</a></td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <% if @appraisal.status == EActivityValuePayed %>
+        <div class="row sub_box">
+          <% if @payment_completed  %>
+              <img src="https://valuethisnow.postaffiliatepro.com/scripts/sale.php?AccountId=default1&TotalCost=<%= number_with_precision(@appraisal.payment.amount, precision: 2) %>&OrderID=<%= @appraisal.id %>&ProductID=appraisal-<%= @appraisal.selected_plan %>" width="1" height="1" >
+          <% end %>
+          <div class="alert alert-info">
+            <i class="icon-ok"></i> Congratulations your item has been submitted for valuation! Click <%= link_to "here", new_appraisal_path, :class => "btn btn-mini btn-success" %> to get more items appraised!
+          </div>
+        </div>
+    <% end %>
+
+      <div class="boo">
+        <h2><%= @appraisal.title.upcase %></h2>
+
+
+        <p>File #: 2842</br>
+          Effective Date of Report: <%= @appraisal.id %>
+        </p>
+
+
+        <h2 class="col-ol" style="background: #e9c973;">Description</h2>
+        <p><%= @appraisal.name %></p>
+
+        <h2 class="col-ol" style="background: #e9c973;">Appraiser's comments :</h2>
+
+        <p><%= @appraisal.appraisal_info.appraiser_comments %></p>
+        <div class="bef">
+          <table width="100%" border="0" cellspacing="0" cellpadding="0"  style="margin:17px;">
+            <tr>
+              <td>
+                <p style="color: #01326a;font-size: 21px;font-weight: 400;line-height: 1.25;"> Replacement value : <font color="#bb1f20"><%= print_replacement_cost(@appraisal) %></font><br>(Comparable)</p>
+                <p style="color: #01326a;font-size: 21px;font-weight: 400;line-height: 1.25;">Fair Market Value : <font color="#bb1f20"><%= print_fair_market_value(@appraisal) %></font></p>
+              </td>
+              <td style="padding-top:0px;">
+                <div id="appraiser-info" class="short-bg" style="margin:inherit; margin-left:32px;">
+                  <% if (@appraiser.signature?) %>
+                      <%= image_tag "#{@appraiser.signature.standard.url}?id=#{rand(1000)}", :height => "100", :width => "250"%>
+                  <% elsif !(@appraiser.appraiser_extra.signature_json.nil? || @appraiser.appraiser_extra.signature_json.empty?) %>
+                      <canvas id="appraiser-signature" height="100" width="250"></canvas>
+                  <% end %>
+                </div>
+                <p style="color: #01326a;font-size: 21px;font-weight: 400;line-height: 1.25; padding-left:35px;"><span style=" font-size: 21px;">prepared by</span></br><%= @appraiser.name %></p>
+              </td>
+            </tr>
+          </table>
+
+          <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td style="width:33%">&nbsp;</td>
+
+              <td  style="width:33%"> <p class="text-center" style="font-size: 24px;font-weight: 400;line-height: 1.25;"><a href="index.html" style="color:#01326a;">www.valuethisnow.com</a></p>
+                <div class="text-center lof">
+                  <img src="https://s3-us-west-2.amazonaws.com/vtn-temp/pdf_related/images/hjk.jpg" alt="hjk" style="width:60%;">
+                </div>
+              </td>
+
+              <td  style="width:33%"><div class="sdfs">
+                <%= image_tag 'https://s3-us-west-2.amazonaws.com/vtn-temp/pdf_related/images/share.png', alt:'share', class: 'sham' %>
+                <!-- AddToAny BEGIN -->
+                <div class="a2a_kit a2a_kit_size_32 a2a_default_style" style="display:none">
+                  <a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+                  <a class="a2a_button_facebook"></a>
+                  <a class="a2a_button_twitter"></a>
+                  <a class="a2a_button_google_plus"></a>
+                </div>
+                <script async src="https://static.addtoany.com/menu/page.js"></script>
+                <!-- AddToAny END -->
+              </div>
+              </td>
+            </tr>
+          </table>
+          <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin:17px;">
+            <tr>
+              <td>
+                <div style="text-align:right; margin:3px;">
+
+                  <span class="short-2"><%= link_to "See more", Rails.application.config.server_url + show_shared_path(@appraisal, :format => :pdf, :full => "yes") %></span>
+
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  <div class="bottom-border"><img src="https://s3-us-west-2.amazonaws.com/vtn-temp/pdf_related/images/border-bottom.jpg"  alt="border-1"/> </div>
+</div>
+</body>
+</html>
+
