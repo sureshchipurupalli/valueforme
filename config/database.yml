@@ -2,8 +2,8 @@ development:
   adapter: postgresql
   encoding: unicode
   database: valuemenow_db
-  username: valuemenow
-  password: valuemenowpw
+  username: postgres
+  password: developer
   host: localhost
   pool: 5
 
@@ -21,6 +21,6 @@ test:
   adapter: postgresql
   encoding: unicode
   database: valuemenow_db_test
-  username: valuemenow
-  password: valuemenowpw
+  username: postgres
+  password: developer
   host: localhost
